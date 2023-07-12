@@ -60,8 +60,8 @@
 					row: 'Row_0wtkqtg',
 					columns: null
 				},
-				id: 'recuirter_email',
-				key: 'recuirter_email',
+				id: 'recruiter_email',
+				key: 'recruiter_email',
 				validate: {
 					required: true
 				}
@@ -70,7 +70,6 @@
 				label: 'Link de Meet',
 				type: 'textfield',
 				defaultValue: urlParams.get('meetID'),
-
 				layout: {
 					row: 'Row_0wtkqtg8',
 					columns: null
@@ -84,38 +83,30 @@
 			{
 				label: 'Oferta publicada',
 				type: 'textarea',
-				class: 'ofert-text',
+				class: 'offer-text',
 				layout: {
 					row: 'Row_0wtkqtg',
 					columns: null
 				},
-				id: 'ofert-text',
-				key: 'ofert-text',
+				id: 'offer_text',
+				key: 'offer_text',
 				validate: {
 					required: true
 				}
 			},
 			{
-				label: 'Fortalezas del Candidato',
-				type: 'textarea',
-				class: 'ofert-text',
+				label: 'Aspiración Salarial',
+				type: 'textfield',
 				layout: {
-					row: 'Row_1kutxop',
+					row: 'Row_0ttqwoz',
 					columns: null
 				},
-				id: 'candidate-strengths',
-				key: 'candidate-strengths'
-			},
-			{
-				label: 'Áreas de mejora',
-				type: 'textarea',
-				class: 'ofert-text',
-				layout: {
-					row: 'Row_1kutxop',
-					columns: null
-				},
-				id: 'candidate-weekness',
-				key: 'candidate-weekness'
+				id: 'salary',
+				key: 'salary',
+				validate: {
+					pattern: '^[0-9]*$',
+					required: true
+				}
 			},
 			{
 				values: [
@@ -146,8 +137,8 @@
 					row: 'Row_0po1ewt',
 					columns: null
 				},
-				id: 'seniority-meets',
-				key: 'seniority-meets',
+				id: 'seniority_meets',
+				key: 'seniority_meets',
 				validate: {
 					required: true
 				}
@@ -181,8 +172,8 @@
 					row: 'Row_0kqv013',
 					columns: null
 				},
-				id: 'requirements-satisfied',
-				key: 'requirements-satisfied',
+				id: 'requirements_satisfied',
+				key: 'requirements_satisfied',
 				validate: {
 					required: true
 				}
@@ -210,14 +201,14 @@
 						value: '5'
 					}
 				],
-				label: '¿Cumple tecnicamente? (1: Muy poco, 5: Totalmente)',
+				label: '¿Cumple técnicamente? (1: Muy poco, 5: Totalmente)',
 				type: 'radio',
 				layout: {
 					row: 'Row_0kqv013',
 					columns: null
 				},
-				id: 'tech-satisfied',
-				key: 'tech-satisfied',
+				id: 'tech_satisfied',
+				key: 'tech_satisfied',
 				validate: {
 					required: true
 				}
@@ -245,42 +236,108 @@
 						value: '5'
 					}
 				],
-				label: 'Evaluación general (1: Muy Mala, 5: Muy Buena)',
+				label: 'Puntualidad (1: Muy mala, 5: Muy buena)',
 				type: 'radio',
 				layout: {
 					row: 'Row_0kqv013',
 					columns: null
 				},
-				id: 'overall-satisfied',
-				key: 'overall-satisfied',
+				id: 'punctuality',
+				key: 'punctuality',
 				validate: {
 					required: true
 				}
 			},
 			{
-				label: 'Notas adicionales evaluador',
+				label: 'Fortalezas técnicas del candidato',
 				type: 'textarea',
-				class: 'ofert-text',
+				class: 'offer-text',
 				layout: {
 					row: 'Row_1kutxop',
 					columns: null
 				},
-				id: 'additional-details',
-				key: 'additional-details'
+				id: 'candidate_strengths',
+				key: 'candidate_strengths'
 			},
 			{
-				label: 'Aspiracion Salarial',
-				type: 'textfield',
+				label: 'Recomendaciones para el candidato',
+				type: 'textarea',
+				class: 'offer-text',
 				layout: {
-					row: 'Row_0ttqwoz',
+					row: 'Row_1kutxop',
 					columns: null
 				},
-				id: 'salary',
-				key: 'salary',
+				id: 'candidate_weakness',
+				key: 'candidate_weakness'
+			},
+			{
+				values: [
+					{
+						label: '1',
+						value: '1'
+					},
+					{
+						label: '2',
+						value: '2'
+					},
+					{
+						label: '3',
+						value: '3'
+					},
+					{
+						label: '4',
+						value: '4'
+					},
+					{
+						label: '5',
+						value: '5'
+					}
+				],
+				label: 'Evaluación general (1: Muy mala, 5: Muy buena)',
+				type: 'radio',
+				layout: {
+					row: 'Row_0kqv013',
+					columns: null
+				},
+				id: 'overall_satisfied',
+				key: 'overall_satisfied',
 				validate: {
-					pattern: '^[0-9]*$',
 					required: true
 				}
+			},
+			{
+				values: [
+					{
+						label: 'Si',
+						value: 'si'
+					},
+					{
+						label: 'No',
+						value: 'no'
+					}
+				],
+				label: 'Continua en el proceso',
+				type: 'radio',
+				layout: {
+					row: 'Row_0kqv013',
+					columns: null
+				},
+				id: 'continue_process',
+				key: 'continue_process',
+				validate: {
+					required: true
+				}
+			},
+			{
+				label: 'Notas adicionales del evaluador',
+				type: 'textarea',
+				class: 'offer-text',
+				layout: {
+					row: 'Row_1kutxop',
+					columns: null
+				},
+				id: 'additional_details',
+				key: 'additional_details'
 			},
 			{
 				action: 'submit',
@@ -294,6 +351,7 @@
 				key: 'field_1puwi1j'
 			}
 		];
+
 		components.forEach((component) => {
 			schema.components.push(component);
 		});

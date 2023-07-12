@@ -25,21 +25,21 @@
 				id: 'Field_0mm4bvu'
 			},
 			{
-				label: 'Centro de Costos',
+				label: 'Correo electrónico del entrevistador',
+				defaultValue: urlParams.get('recruiterEmail'),
 				type: 'textfield',
-				defaultValue: urlParams.get('costCenter'),
 				layout: {
 					row: 'Row_0wtkqtg',
 					columns: null
 				},
-				id: 'cost_center',
-				key: 'cost_center',
+				id: 'recruiter_email',
+				key: 'recruiter_email',
 				validate: {
 					required: true
 				}
 			},
 			{
-				label: 'Email del Candidato',
+				label: 'Correo electrónico del candidato',
 				defaultValue: urlParams.get('candidateEmail'),
 				type: 'textfield',
 				layout: {
@@ -53,24 +53,23 @@
 				}
 			},
 			{
-				label: 'Email del Seleccionador',
-				defaultValue: urlParams.get('recuirterEmail'),
+				label: 'Indique el centro de costos asociado',
 				type: 'textfield',
+				defaultValue: urlParams.get('costCenter'),
 				layout: {
 					row: 'Row_0wtkqtg',
 					columns: null
 				},
-				id: 'recuirter_email',
-				key: 'recuirter_email',
+				id: 'cost_center',
+				key: 'cost_center',
 				validate: {
 					required: true
 				}
 			},
 			{
-				label: 'Link de Meet',
+				label: 'Enlace de la reunión en Google Meet',
 				type: 'textfield',
 				defaultValue: urlParams.get('meetID'),
-
 				layout: {
 					row: 'Row_0wtkqtg8',
 					columns: null
@@ -82,15 +81,15 @@
 				}
 			},
 			{
-				label: 'Oferta publicada',
+				label: 'Describa la oferta de empleo publicada',
 				type: 'textarea',
-				class: 'ofert-text',
+				class: 'offer-text',
 				layout: {
 					row: 'Row_0wtkqtg',
 					columns: null
 				},
-				id: 'ofert-text',
-				key: 'ofert-text',
+				id: 'offer-text',
+				key: 'offer-text',
 				validate: {
 					required: true
 				}
@@ -98,38 +97,50 @@
 			{
 				values: [
 					{
-						label: 'Si',
-						value: 'si'
+						label: 'Sí',
+						value: 'sí'
 					},
 					{
 						label: 'No',
 						value: 'no'
 					}
 				],
-				label: '¿Satisface completamente los requisitos del perfil solicitado?',
+				label:
+					'¿El candidato cumple con los años de experiencia solicitados en la oferta de empleo?',
 				type: 'radio',
 				layout: {
 					row: 'Row_0kqv013',
 					columns: null
 				},
-				id: 'requirements-satisfied',
-				key: 'requirements-satisfied',
+				id: 'years-experience',
+				key: 'years-experience',
 				validate: {
 					required: true
 				}
 			},
 			{
+				label:
+					'Describa la experiencia profesional del candidato relacionada con la oferta de empleo',
+				type: 'textarea',
+				layout: {
+					row: 'Row_1kutxop',
+					columns: null
+				},
+				id: 'experience-related',
+				key: 'experience-related'
+			},
+			{
 				values: [
 					{
-						label: 'Si',
-						value: 'si'
+						label: 'Sí',
+						value: 'sí'
 					},
 					{
 						label: 'No',
 						value: 'no'
 					}
 				],
-				label: '¿Obtuvo más del 50% en la prueba técnica?',
+				label: '¿El candidato obtuvo una puntuación superior al 50% en la prueba técnica?',
 				type: 'radio',
 				layout: {
 					row: 'Row_0po1ewt',
@@ -142,7 +153,34 @@
 				}
 			},
 			{
-				label: 'Aspiracion Salarial',
+				values: [
+					{
+						label: 'Presencial',
+						value: 'Presencial'
+					},
+					{
+						label: 'Remota',
+						value: 'Remota'
+					},
+					{
+						label: 'Híbrida',
+						value: 'Híbrida'
+					}
+				],
+				label: '¿El candidato acepta la modalidad de trabajo ofrecida? Indique cuál',
+				type: 'radio',
+				layout: {
+					row: 'Row_0po1ewt',
+					columns: null
+				},
+				id: 'work-mode',
+				key: 'work-mode',
+				validate: {
+					required: true
+				}
+			},
+			{
+				label: 'Indique la aspiración salarial del candidato',
 				type: 'textfield',
 				layout: {
 					row: 'Row_0ttqwoz',
@@ -156,7 +194,74 @@
 				}
 			},
 			{
-				label: 'Detalles adicionales',
+				values: [
+					{
+						label: 'Sí',
+						value: 'sí'
+					},
+					{
+						label: 'No',
+						value: 'no'
+					}
+				],
+				label: '¿La aspiración salarial del candidato se encuentra dentro del rango presupuestado?',
+				type: 'radio',
+				layout: {
+					row: 'Row_0kqv013',
+					columns: null
+				},
+				id: 'salary-range',
+				key: 'salary-range',
+				validate: {
+					required: true
+				}
+			},
+			{
+				values: [
+					{
+						label: '1 día',
+						value: '1'
+					},
+					{
+						label: '2 días',
+						value: '2'
+					},
+					{
+						label: '3 días',
+						value: '3'
+					},
+					{
+						label: '4 días',
+						value: '4'
+					},
+					{
+						label: '5 días',
+						value: '5'
+					},
+					{
+						label: '1 semana',
+						value: '7'
+					},
+					{
+						label: '2 semanas',
+						value: '14'
+					},
+					{
+						label: 'Más de 2 semanas',
+						value: '+14'
+					}
+				],
+				label: '¿Cuántos días se estiman para la vinculación del candidato?',
+				type: 'select',
+				layout: {
+					row: 'Row_1gpflkr',
+					columns: null
+				},
+				id: 'days-link',
+				key: 'days-link'
+			},
+			{
+				label: 'Proporcione cualquier detalle adicional relevante',
 				type: 'textarea',
 				layout: {
 					row: 'Row_1kutxop',
@@ -177,6 +282,7 @@
 				key: 'field_1puwi1j'
 			}
 		];
+
 		components.forEach((component) => {
 			schema.components.push(component);
 		});
@@ -264,7 +370,7 @@
 				</div>
 			{:else if component.type === 'select'}
 				<div class="form-group">
-					<label for={component.id}>{component.label}</label>
+					<label for={component.id}><strong>{component.label}</strong></label>
 					<select id={component.id} name={component.key} class="form-control">
 						{#each component.values as value (value.value)}
 							<option value={value.value}>{value.label}</option>
