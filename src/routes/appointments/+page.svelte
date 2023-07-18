@@ -19,7 +19,7 @@
 			id: 'Field_0mm4bvu'
 		},
 		{
-			label: 'Correo electrónico del entrevistador',
+			label: 'Correo electrónico del seleccionador',
 			defaultValue: '',
 			type: 'textfield',
 			layout: {
@@ -42,6 +42,48 @@
 			},
 			id: 'candidate_email',
 			key: 'candidate_email',
+			validate: {
+				required: true
+			}
+		},
+		{
+			label: 'Nombre del candidato',
+			defaultValue: '',
+			type: 'textfield',
+			layout: {
+				row: 'Row_0wtkqtg',
+				columns: null
+			},
+			id: 'candidate_name',
+			key: 'candidate_name',
+			validate: {
+				required: true
+			}
+		},
+		{
+			label: 'Hoja de vida del candidato',
+			defaultValue: '',
+			type: 'textfield',
+			layout: {
+				row: 'Row_0wtkqtg',
+				columns: null
+			},
+			id: 'candidate_cv',
+			key: 'candidate_cv',
+			validate: {
+				required: true
+			}
+		},
+		{
+			label: 'Prueba tecnica del candidato',
+			defaultValue: '',
+			type: 'textfield',
+			layout: {
+				row: 'Row_0wtkqtg',
+				columns: null
+			},
+			id: 'candidate_test',
+			key: 'candidate_test',
 			validate: {
 				required: true
 			}
@@ -196,6 +238,33 @@
 			},
 			id: 'work-mode',
 			key: 'work-mode',
+			validate: {
+				required: true
+			}
+		},
+		{
+			values: [
+				{
+					label: 'OPS',
+					value: 'OPS'
+				},
+				{
+					label: 'Obra Labor',
+					value: 'Obra Labor'
+				},
+				{
+					label: 'Indefinido',
+					value: 'Indefinido'
+				}
+			],
+			label: 'Tipo de contrato ofrecido',
+			type: 'radio',
+			layout: {
+				row: 'Row_0po1ewt',
+				columns: null
+			},
+			id: 'contract-type-mode',
+			key:  'contract-type-mode',
 			validate: {
 				required: true
 			}
