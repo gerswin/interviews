@@ -422,6 +422,7 @@
 				})
 				.then((json) => {
 					console.log(json); // Puedes manejar el JSON resultante aquí
+					alert("Informacion Guardada, Gracias por su tiempo")
 				})
 				.catch((e) => {
 					console.log('Hubo un problema con la solicitud fetch: ' + e.message);
