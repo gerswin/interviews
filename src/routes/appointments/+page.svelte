@@ -372,11 +372,15 @@
 		if (component.validate) {
 			if (component.validate.required && !value) {
 				errors[component.key] = `${component.label} es requerido`;
+				alert( `${component.label} es requerido`)
+
 			} else if (
 				component.validate.pattern &&
 				!new RegExp(component.validate.pattern).test(value)
 			) {
 				errors[component.key] = `${component.label} no es válido`;
+				alert( `${component.label} no es válido`)
+
 			} else {
 				delete errors[component.key];
 			}
