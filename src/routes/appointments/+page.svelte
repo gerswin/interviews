@@ -1,12 +1,16 @@
 <script>
 	// @ts-nocheck
-	import Header from '../Header.svelte';
 	import { onMount } from 'svelte';
 	import animation from '../../animation_lk6283x2.json';
-	
+	import success from '../../successfully.json';
+
+	import { Label, Input, Textarea, Select, Radio, Button, Helper, Skeleton } from 'flowbite-svelte';
+	import { Modal } from 'flowbite-svelte';
+
 	let data = null;
 	let toggled = false;
 	let LottiePlayer;
+	let defaultModal = false;
 
 	let components = [
 		{
@@ -124,6 +128,7 @@
 				row: 'Row_0wtkqtg',
 				columns: null
 			},
+			rows: 10,
 			id: 'job_description',
 			key: 'job_description',
 			validate: {
@@ -134,6 +139,8 @@
 			label: 'Analisis de la oferta de empleo',
 			type: 'textarea',
 			class: 'offer-text',
+			rows: 10,
+
 			layout: {
 				row: 'Row_0wtkqtg',
 				columns: null
@@ -148,6 +155,8 @@
 			label: 'Analisis de la prueba técnica',
 			type: 'textarea',
 			class: 'offer-text',
+			rows: 10,
+
 			layout: {
 				row: 'Row_0wtkqtg',
 				columns: null
@@ -185,6 +194,8 @@
 			label:
 				'Describa la experiencia profesional del candidato relacionada con la oferta de empleo',
 			type: 'textarea',
+			rows: 10,
+
 			layout: {
 				row: 'Row_1kutxop',
 				columns: null
@@ -264,7 +275,7 @@
 				columns: null
 			},
 			id: 'contract-type-mode',
-			key:  'contract-type-mode',
+			key: 'contract-type-mode',
 			validate: {
 				required: true
 			}
@@ -353,6 +364,8 @@
 		{
 			label: 'Proporcione cualquier detalle adicional relevante',
 			type: 'textarea',
+			rows: 7,
+
 			layout: {
 				row: 'Row_1kutxop',
 				columns: null
@@ -373,19 +386,19 @@
 		}
 	];
 	let controlsLayout = [
-    'previousFrame',
-    'playpause',
-    'stop',
-    'nextFrame',
-    'progress',
-    'frame',
-    'loop',
-    'spacer',
-    'background',
-    'snapshot',
-    'zoom',
-    'info',
-  ];
+		'previousFrame',
+		'playpause',
+		'stop',
+		'nextFrame',
+		'progress',
+		'frame',
+		'loop',
+		'spacer',
+		'background',
+		'snapshot',
+		'zoom',
+		'info'
+	];
 	let schema = {
 		components: [],
 		type: 'default',
@@ -441,24 +454,18 @@
 		if (component.validate) {
 			if (component.validate.required && !value) {
 				errors[component.key] = `${component.label} es requerido`;
-				alert( `${component.label} es requerido`)
-
+				//alert( `${component.label} es requerido`)
 			} else if (
 				component.validate.pattern &&
 				!new RegExp(component.validate.pattern).test(value)
 			) {
 				errors[component.key] = `${component.label} no es válido`;
-				alert( `${component.label} no es válido`)
-
+				//alert( `${component.label} no es válido`)
 			} else {
 				delete errors[component.key];
 			}
 		}
 	};
-
-	function isRequired(value) {
-		return value != null && value !== '';
-	}
 
 	const submitForm = (event) => {
 		event.preventDefault();
@@ -478,7 +485,6 @@
 		}
 
 		if (Object.keys(errors).length === 0) {
-
 			const url = `https://rkya5ep6d4.execute-api.us-east-1.amazonaws.com/interview/${id}`; // La URL de tu servidor a la que realizar la solicitud PUT
 			fetch(url, {
 				method: 'PUT', // o 'POST'
@@ -490,12 +496,13 @@
 				.then((response) => {
 					if (!response.ok) {
 						throw new Error(`HTTP error! status: ${response.status}`);
+					} else {
+						defaultModal = true;
 					}
 					return response.json(); // Esto devuelve una promesa
 				})
 				.then((json) => {
 					console.log(json); // Puedes manejar el JSON resultante aquí
-					alert("Informacion Guardada, Gracias por su tiempo")
 				})
 				.catch((e) => {
 					console.log('Hubo un problema con la solicitud fetch: ' + e.message);
@@ -506,132 +513,153 @@
 	};
 </script>
 
-<div class="container" style="padding:20px">
-	<Header />
-	{#if toggled}
-		<form on:submit|preventDefault={submitForm}>
-			{#each schema.components as component (component.id)}
-				{#if component.type === 'number'}
-					<div class="form-group">
-						<label for={component.id}><strong>{component.label}</strong></label>
-						<input id={component.id} name={component.key} type="number" class="form-control" />
-					</div>
-				{:else if component.type === 'textfield'}
-					<div class="form-group">
-						<label for={component.id}><strong>{component.label}</strong></label>
-						<input
-							id={component.id}
-							name={component.key}
-							type="text"
-							class="form-control"
-							bind:value={component.defaultValue}
-						/>
-					</div>
-				{:else if component.type === 'textarea'}
-					<div class="form-group">
-						<label for={component.id}><strong>{component.label}</strong></label>
-						<textarea
-							id={component.id}
-							name={component.key}
-							class="form-control {component.class}"
-							bind:value={component.defaultValue}
-						/>
-					</div>
-				{:else if component.type === 'datetime'}
-					<div class="form-group">
-						<label for={component.id}>{component.label}</label>
-						<input
-							id={component.id}
-							name={component.key}
-							type="datetime-local"
-							class="form-control"
-						/>
-					</div>
-				{:else if component.type === 'select'}
-					<div class="form-group">
-						<label for={component.id}><strong>{component.label}</strong></label>
-						<select
-							bind:value={component.defaultValue}
-							id={component.id}
-							name={component.key}
-							class="form-control"
-						>
-							{#each component.values as value (value.value)}
-								<option value={value.value}>{value.label}</option>
-							{/each}
-						</select>
-					</div>
-				{:else if component.type === 'radio'}
-					<div class="form-group">
-						<label for={component.id}><strong>{component.label}</strong></label>
-						{#each component.values as value (value.value)}
-							<div class="form-check">
-								<input
-									bind:group={component.defaultValue}
-									class="form-check-input"
-									type="radio"
-									id={value.value}
-									name={component.key}
-									value={value.value}
-								/>
-								<label class="form-check-label" for={value.value}>{value.label}</label>
-							</div>
-						{/each}
-					</div>
-				{:else if component.type === 'checkbox'}
-					<div class="form-check">
-						<input
-							class="form-check-input"
-							id={component.id}
-							name={component.key}
-							type="checkbox"
-						/>
-						<label class="form-check-label" for={component.id}>{component.label}</label>
-					</div>
-				{:else if component.type === 'checklist'}
-					<div class="form-group">
-						<label for={component.id}><strong>{component.label}</strong></label>
-						{#each component.values as value (value.value)}
-							<div class="form-check">
-								<input
-									class="form-check-input"
-									type="checkbox"
-									id={value.value}
-									name={component.key}
-									value={value.value}
-								/>
-								<label class="form-check-label" for={value.value}>{value.label}</label>
-							</div>
-						{/each}
-					</div>
-				{:else if component.type === 'button'}
-					<button id={component.id} name={component.key} type="submit" class="btn btn-primary"
-						>{component.label}</button
-					>
-				{/if}
-			{/each}
-		</form>
-	{:else if LottiePlayer}
+<div class="p-5">
+	<Modal title="Guardado con exito" bind:open={defaultModal} autoclose>
 		<LottiePlayer
-			src={animation}
+			src={success}
 			autoplay={true}
 			loop={true}
 			controls={false}
 			renderer="svg"
 			background="transparent"
-			height={800}
-			controlsLayout="{controlsLayout}"
-			width={800}
+			height={400}
+			{controlsLayout}
+			width={400}
 		/>
+		<svelte:fragment slot="footer">
+			<Button>Entendido</Button>
+		</svelte:fragment>
+	</Modal>
+	{#if toggled}
+		<form on:submit|preventDefault={submitForm}>
+			{#each schema.components as component (component.id)}
+				{#if component.type === 'number'}
+					<div class="mb-4">
+						<Label for={component.id} class="block font-semibold">{component.label}</Label>
+						<Input
+							id={component.id}
+							name={component.key}
+							type="number"
+							class="block w-full border py-2 px-4"
+						/>
+					</div>
+				{:else if component.type === 'textfield'}
+					<div class="mb-4">
+						<Label for={component.id} class="block font-semibold">{component.label}</Label>
+						<Input
+							id={component.id}
+							name={component.key}
+							type="text"
+							class="block w-full border py-2 px-4"
+							color={errors[component.key] ? 'red' : 'base'}
+							bind:value={component.defaultValue}
+						/>
+						{#if errors[component.key]}
+							<Helper class="mt-2" color="red"
+								><span class="font-medium">Error!</span> {errors[component.key]}</Helper
+							>
+						{/if}
+					</div>
+				{:else if component.type === 'textarea'}
+					<div class="mb-4">
+						<Label for={component.id} class="block font-semibold">{component.label}</Label>
+						<Textarea
+							rows={component.rows || 3}
+							id={component.id}
+							name={component.key}
+							class="block w-full border py-2 px-4 {component.class}"
+							bind:value={component.defaultValue}
+						/>
+						{#if errors[component.key]}
+							<Helper class="mt-2" color="red"
+								><span class="font-medium">Error!</span> {errors[component.key]}</Helper
+							>
+						{/if}
+					</div>
+				{:else if component.type === 'datetime'}
+					<div class="mb-4">
+						<Label for={component.id} class="block">{component.label}</Label>
+						<Input
+							id={component.id}
+							name={component.key}
+							type="datetime-local"
+							class="block w-full border py-2 px-4"
+						/>
+					</div>
+				{:else if component.type === 'select'}
+					<div class="mb-4">
+						<Label for={component.id} class="block font-semibold">{component.label}</Label>
+						<Select
+							bind:value={component.defaultValue}
+							id={component.id}
+							name={component.key}
+							class="block w-full border py-2 px-4"
+						>
+							{#each component.values as value (value.value)}
+								<option value={value.value}>{value.label}</option>
+							{/each}
+						</Select>
+						{#if errors[component.key]}
+							<Helper class="mt-2" color="red"
+								><span class="font-medium">Error!</span> {errors[component.key]}</Helper
+							>
+						{/if}
+					</div>
+				{:else if component.type === 'radio'}
+					<div class="mb-4">
+						<Label for={component.id} class="block font-semibold">{component.label}</Label>
+						{#each component.values as value (value.value)}
+							<div class="flex items-center">
+								<Radio
+									bind:group={component.defaultValue}
+									class="mr-2"
+									type="radio"
+									id={value.value}
+									name={component.key}
+									value={value.value}
+								/>
+								<Label for={value.value}>{value.label}</Label>
+							</div>
+						{/each}
+						{#if errors[component.key]}
+							<Helper class="mt-2" color="red"
+								><span class="font-medium">Error!</span> {errors[component.key]}</Helper
+							>
+						{/if}
+					</div>
+				{:else if component.type === 'checkbox'}
+					<div class="flex items-center">
+						<Input class="mr-2" id={component.id} name={component.key} type="checkbox" />
+						<Label for={component.id}>{component.label}</Label>
+					</div>
+				{:else if component.type === 'checklist'}
+					<div class="mb-4">
+						<Label for={component.id} class="block font-semibold">{component.label}</Label>
+						{#each component.values as value (value.value)}
+							<div class="flex items-center">
+								<Input
+									class="mr-2"
+									type="checkbox"
+									id={value.value}
+									name={component.key}
+									value={value.value}
+								/>
+								<Label for={value.value}>{value.label}</Label>
+							</div>
+						{/each}
+					</div>
+				{:else if component.type === 'button'}
+					<Button id={component.id} name={component.key} type="submit" class="btn btn-blue"
+						>{component.label}</Button
+					>
+				{/if}
+			{/each}
+		</form>
+	{:else if LottiePlayer}
+		<Skeleton size="xxl" class="mt-8 mb-2.5" />
 	{/if}
 </div>
 
 <style>
-	.offer-text {
-		height: 314px;
-	}
-	.form-label {
-		font-size: 20px;
-		font-weight: bold;
-	}
+
 </style>
