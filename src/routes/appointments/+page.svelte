@@ -566,6 +566,7 @@
 							rows={component.rows || 3}
 							id={component.id}
 							name={component.key}
+							color={errors[component.key] ? 'red' : 'base'}
 							class="block w-full border py-2 px-4 {component.class}"
 							bind:value={component.defaultValue}
 						/>
