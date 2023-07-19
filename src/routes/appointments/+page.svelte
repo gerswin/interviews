@@ -1,7 +1,6 @@
 <script>
 	// @ts-nocheck
 	import { onMount } from 'svelte';
-	import animation from '../../animation_lk6283x2.json';
 	import success from '../../successfully.json';
 
 	import { Label, Input, Textarea, Select, Radio, Button, Helper, Skeleton } from 'flowbite-svelte';
@@ -89,7 +88,7 @@
 			id: 'candidate_test',
 			key: 'candidate_test',
 			validate: {
-				required: true
+				required: false
 			}
 		},
 		{
