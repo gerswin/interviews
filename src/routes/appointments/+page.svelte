@@ -147,7 +147,7 @@
 			id: 'analysis',
 			key: 'analysis',
 			validate: {
-				required: true
+				required: false
 			}
 		},
 		{
@@ -163,7 +163,7 @@
 			id: 'test_analysis',
 			key: 'test_analysis',
 			validate: {
-				required: true
+				required: false
 			}
 		},
 		{
